@@ -35,6 +35,24 @@ public partial class @PlayerInputMaster: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseX"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""ed4cea54-47b3-4318-99b0-6411c8c9efb6"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseY"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""e2e2e95b-a24c-4bc1-9dec-82504cafe575"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -92,6 +110,28 @@ public partial class @PlayerInputMaster: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0c631d4d-02ad-4d07-b04a-2ca08a19b1db"",
+                    ""path"": ""<Mouse>/delta/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseX"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""26b3b635-7d3c-4517-bde5-2d458ac1f764"",
+                    ""path"": ""<Pointer>/delta/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseY"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -101,6 +141,8 @@ public partial class @PlayerInputMaster: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
+        m_Player_MouseX = m_Player.FindAction("MouseX", throwIfNotFound: true);
+        m_Player_MouseY = m_Player.FindAction("MouseY", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,11 +205,15 @@ public partial class @PlayerInputMaster: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Movement;
+    private readonly InputAction m_Player_MouseX;
+    private readonly InputAction m_Player_MouseY;
     public struct PlayerActions
     {
         private @PlayerInputMaster m_Wrapper;
         public PlayerActions(@PlayerInputMaster wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
+        public InputAction @MouseX => m_Wrapper.m_Player_MouseX;
+        public InputAction @MouseY => m_Wrapper.m_Player_MouseY;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -180,6 +226,12 @@ public partial class @PlayerInputMaster: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @MouseX.started += instance.OnMouseX;
+            @MouseX.performed += instance.OnMouseX;
+            @MouseX.canceled += instance.OnMouseX;
+            @MouseY.started += instance.OnMouseY;
+            @MouseY.performed += instance.OnMouseY;
+            @MouseY.canceled += instance.OnMouseY;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -187,6 +239,12 @@ public partial class @PlayerInputMaster: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @MouseX.started -= instance.OnMouseX;
+            @MouseX.performed -= instance.OnMouseX;
+            @MouseX.canceled -= instance.OnMouseX;
+            @MouseY.started -= instance.OnMouseY;
+            @MouseY.performed -= instance.OnMouseY;
+            @MouseY.canceled -= instance.OnMouseY;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -207,5 +265,7 @@ public partial class @PlayerInputMaster: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnMouseX(InputAction.CallbackContext context);
+        void OnMouseY(InputAction.CallbackContext context);
     }
 }
