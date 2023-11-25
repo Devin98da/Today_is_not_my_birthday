@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] private Movement _movement;
+    [SerializeField] private Player _player;
     [SerializeField] private MouseLook _mouseLook;
 
     PlayerInputMaster _controls;
     PlayerInputMaster.PlayerActions _playerActions;
 
     Vector2 _movementInput, _mouseInput;
+    
 
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class InputManager : MonoBehaviour
         _playerActions.Movement.performed += ctx => _movementInput = ctx.ReadValue<Vector2>();
         _playerActions.MouseX.performed += ctx => _mouseInput.x = ctx.ReadValue<float>();
         _playerActions.MouseY.performed += ctx => _mouseInput.y = ctx.ReadValue<float>();
+        //_playerActions.Interact.performed += ctx => Debug.Log(ctx);
 
     }
 
@@ -34,7 +36,7 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        _movement.RecieveInput(_movementInput);
+        _player.RecieveInput(_movementInput);
         _mouseLook.RecieveInput(_mouseInput);
     }
 }
