@@ -69,8 +69,17 @@ public class Player : MonoBehaviour
             {
                 if (Keyboard.current.eKey.wasPressedThisFrame)
                 {
-                    interactable.Interact();
+                    if (interactable.CanExamine)
+                    {
+                        Debug.Log("Opening object examiner");
+                    }
+                    else
+                    {
+                        Debug.Log("Do what is in interact method");
+                    }
+                    //interactable.Interact();
                 }
+
             }
         }
 

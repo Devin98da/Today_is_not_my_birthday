@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour, IInteractable
 {
+    public bool canExamine;
+
+
+    public bool CanExamine => canExamine;
+
     #region Interact
     /// <summary>
     /// Interact with objects
