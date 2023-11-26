@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,8 @@ public class Player : MonoBehaviour
     Vector3 _horizontalVelocity;
     Vector3 _verticalVelocity;
     Vector2 _horizontalInput;
+
+    public static event Action<IInteractable> OnExamineItem;
 
     private void Update()
     {
@@ -72,6 +75,7 @@ public class Player : MonoBehaviour
                     if (interactable.CanExamine)
                     {
                         Debug.Log("Opening object examiner");
+                        OnExamineItem?.Invoke(interactable);
                     }
                     else
                     {
