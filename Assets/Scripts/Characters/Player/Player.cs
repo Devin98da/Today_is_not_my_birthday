@@ -17,6 +17,9 @@ public class Player : Character
     [SerializeField] private float _intearctionDistance = 5f;
     [SerializeField] private LayerMask _inteactionLayer;
 
+    [Header("Inventory")]
+    public List<StorableItem> inventory = new List<StorableItem>();
+
     private Ray ray;
     private RaycastHit _hitinfo;
     private bool _canInteract;
@@ -91,4 +94,6 @@ public class Player : Character
     }
 
     #endregion
+
+    
 }
