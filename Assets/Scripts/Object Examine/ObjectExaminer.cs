@@ -4,28 +4,31 @@ using UnityEngine;
 
 public class ObjectExaminer : MonoBehaviour
 {
-    [SerializeField] private List<Interactable> interactablesList = new List<Interactable>();
+    [SerializeField] private List<StorableItem> interactablesList = new List<StorableItem>();
     [SerializeField] private GameObject _examineCanvas;
 
 
     private void Start()
     {
-        Player.OnExamineItem += ExamineObject;
+        StorableItem.OnExamineItem += ExamineObject;
     }
 
-    public void ExamineObject(IInteractable interactable)
+    public void ExamineObject(StorableItem item)
     {
-        //foreach (var obj in interactablesList)
-        //{
-        //    if(obj === interactable)
-        //    {
-        //        obj.gameObject.SetActive(true);
-        //    }
-        //    else
-        //    {
-        //        obj.gameObject.SetActive(false);
-        //    }
-        //}
+        foreach (var obj in interactablesList)
+        {
+            if (obj.id == item.id)
+            {
+                obj.gameObject.SetActive(true);
+                Debug.Log("Object now examine" + item.interactableName);
+            }
+            else
+            {
+                obj.gameObject.SetActive(false);
+                Debug.Log("There are no items in interactable list");
+
+            }
+        }
         _examineCanvas.SetActive(true);
     }
 

@@ -25,7 +25,6 @@ public class ExamineObject : MonoBehaviour
         {
             _deltaMousePos = Mouse.current.position.ReadValue() - _lastmousePos;
             _axis = Quaternion.AngleAxis(-90f, Vector3.forward) * _deltaMousePos;
-            Debug.Log(_deltaMousePos.magnitude);
             transform.rotation = Quaternion.AngleAxis(_deltaMousePos.magnitude * _examineRotateSpeed, _axis) * transform.rotation;
 
         }

@@ -2236,7 +2236,7 @@ MonoBehaviour:
   characterName: Max
   health: 100
   _characterController: {fileID: 1720708051}
-  _speed: 10
+  _speed: 5
   _gravity: -9.81
   _ground:
     serializedVersion: 2
@@ -2639,7 +2639,8 @@ GameObject:
   - component: {fileID: 2104098568}
   - component: {fileID: 2104098567}
   - component: {fileID: 2104098566}
-  m_Layer: 0
+  - component: {fileID: 2104098569}
+  m_Layer: 7
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2732,6 +2733,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104098564}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2104098569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104098564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303ff4a0e1252294e96cab0071a3ce32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 151fbb89-a43c-469e-a19c-f4b37d2ba919
+  interactableName: Door
+  canExamine: 0
 --- !u!1001 &2107961003033246528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2743,7 +2759,7 @@ PrefabInstance:
     - target: {fileID: 524331065009255567, guid: f156c65896041db4597f44578a092daf,
         type: 3}
       propertyPath: m_Name
-      value: Cube
+      value: Bat
       objectReference: {fileID: 0}
     - target: {fileID: 4653545059657016314, guid: f156c65896041db4597f44578a092daf,
         type: 3}
@@ -2806,8 +2822,8 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 524331065009255567, guid: f156c65896041db4597f44578a092daf,
         type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2107961003033246530}
+      insertIndex: 3
+      addedObject: {fileID: 2107961003033246531}
   m_SourcePrefab: {fileID: 100100000, guid: f156c65896041db4597f44578a092daf, type: 3}
 --- !u!1 &2107961003033246529 stripped
 GameObject:
@@ -2815,7 +2831,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2107961003033246528}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2107961003033246530
+--- !u!114 &2107961003033246531
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2824,10 +2840,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2107961003033246529}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbb148c19825d5f498c330815e76cd24, type: 3}
+  m_Script: {fileID: 11500000, guid: 6afd89a1132548240a7839826c67a483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: e8a16e53-89c7-4138-9f5d-5fcfc574f406
+  id: ed68270f-daa3-4405-bfb6-592e740fb61c
   interactableName: 
   canExamine: 0
   icon: {fileID: 0}

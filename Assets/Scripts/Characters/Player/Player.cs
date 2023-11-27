@@ -26,7 +26,6 @@ public class Player : Character
     Vector3 _verticalVelocity;
     Vector2 _horizontalInput;
 
-    public static event Action<IInteractable> OnExamineItem;
 
     private void Update()
     {
@@ -74,16 +73,16 @@ public class Player : Character
                 {
 
 
-                    if (interactable.CanExamine)
-                    {
-                        Debug.Log("Opening object examiner");
-                        OnExamineItem?.Invoke(interactable);
-                    }
-                    else
-                    {
-                        Debug.Log("Do what is in interact method");
-                    }
-                    //interactable.Interact();
+                    //if (interactable.CanExamine)
+                    //{
+                    //    Debug.Log("Opening object examiner");
+                    //    OnExamineItem?.Invoke(interactable);
+                    //}
+                    //else
+                    //{
+                    //    Debug.Log("Do what is in interact method");
+                    //}
+                    interactable.Interact();
                 }
 
             }
