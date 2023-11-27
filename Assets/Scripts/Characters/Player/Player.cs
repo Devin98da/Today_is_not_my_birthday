@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
     [Header("Movement")]
     [SerializeField] private CharacterController _characterController;
@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
 
 
     #region Movement
-    void Movement()
+    public override void Movement()
     {
         _isGrounded = Physics.CheckSphere(transform.position, 0.1f, _ground);
         if (_isGrounded)
@@ -72,6 +72,8 @@ public class Player : MonoBehaviour
             {
                 if (Keyboard.current.eKey.wasPressedThisFrame)
                 {
+
+
                     if (interactable.CanExamine)
                     {
                         Debug.Log("Opening object examiner");
@@ -88,5 +90,6 @@ public class Player : MonoBehaviour
         }
 
     }
+
     #endregion
 }
