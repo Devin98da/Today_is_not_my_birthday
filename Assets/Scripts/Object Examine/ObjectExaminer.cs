@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ObjectExaminer : MonoBehaviour
 {
     [SerializeField] private List<StorableItem> interactablesList = new List<StorableItem>();
     [SerializeField] private GameObject _examineCanvas;
+    [SerializeField] private Player _player;
+
+    StorableItem _storableItem;
 
 
     private void Start()
@@ -13,8 +17,18 @@ public class ObjectExaminer : MonoBehaviour
         StorableItem.OnExamineItem += ExamineObject;
     }
 
+    private void Update()
+    {
+        if (_examineCanvas.activeSelf)
+        {
+            OnExamineTakeObject();
+            OnExitExamine();
+        }
+    }
+
     public void ExamineObject(StorableItem item)
     {
+        _storableItem = item;
         foreach (var obj in interactablesList)
         {
             if (obj.id == item.id)
@@ -32,13 +46,29 @@ public class ObjectExaminer : MonoBehaviour
         _examineCanvas.SetActive(true);
     }
 
-    public void OnTakeObject()
+    public void OnExamineTakeObject()
     {
         // add item to inventory
+        if(Mouse.current.rightButton.wasPressedThisFrame)
+        {
+            _player.AddItem(_storableItem);
+            _examineCanvas.SetActive(false);
+        }
     }
 
-    public void OnCanvasGroupChanged()
+    public void OnExitExamine()
     {
         // hide examine uI
+        if(Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            _examineCanvas.SetActive(false);
+            _storableItem.gameObject.SetActive(true);
+        }
+
+    }
+
+    public void OnZoomExamineObject()
+    {
+
     }
 }

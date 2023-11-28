@@ -16,4 +16,9 @@ public class StorableItem : Interactable, IInteractable
     {
         OnExamineItem?.Invoke(this);
     }
+
+    public virtual void Use()
+    {
+
+    }
 }

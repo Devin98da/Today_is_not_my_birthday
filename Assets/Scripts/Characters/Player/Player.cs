@@ -86,6 +86,7 @@ public class Player : Character
                     //    Debug.Log("Do what is in interact method");
                     //}
                     interactable.Interact();
+                    _hitinfo.collider.gameObject.SetActive(false);
                 }
 
             }
@@ -95,5 +96,13 @@ public class Player : Character
 
     #endregion
 
-    
+    public void AddItem(StorableItem item)
+    {
+        inventory.Add(item);
+    }
+
+    public void RemoveItem()
+    {
+
+    }
 }
