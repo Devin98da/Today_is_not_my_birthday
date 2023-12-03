@@ -5,8 +5,12 @@ using UnityEngine;
 
 public class StorableItem : Interactable, IInteractable
 {
+    public bool isStackble;
     public Sprite icon;
     public int maxStackSize;
+    public int amount;
+    public int maxAmount;
+
     public static event Action<StorableItem> OnExamineItem;
 
 

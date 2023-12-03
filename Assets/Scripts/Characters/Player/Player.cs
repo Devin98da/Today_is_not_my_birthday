@@ -17,8 +17,7 @@ public class Player : Character
     [SerializeField] private float _intearctionDistance = 5f;
     [SerializeField] private LayerMask _inteactionLayer;
 
-    [Header("Inventory")]
-    public List<StorableItem> inventory = new List<StorableItem>();
+
 
     private Ray ray;
     private RaycastHit _hitinfo;
@@ -28,6 +27,8 @@ public class Player : Character
     Vector3 _horizontalVelocity;
     Vector3 _verticalVelocity;
     Vector2 _horizontalInput;
+
+
 
 
     private void Update()
@@ -96,13 +97,5 @@ public class Player : Character
 
     #endregion
 
-    public void AddItem(StorableItem item)
-    {
-        inventory.Add(item);
-    }
 
-    public void RemoveItem()
-    {
-
-    }
 }

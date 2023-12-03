@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,11 @@ public class ObjectExaminer : MonoBehaviour
     [SerializeField] private List<StorableItem> interactablesList = new List<StorableItem>();
     [SerializeField] private GameObject _examineCanvas;
     [SerializeField] private Player _player;
+    [SerializeField] private Camera _camera;
 
     StorableItem _storableItem;
+
+    public static event Action<StorableItem> OnPickUpExamineItem;
 
 
     private void Start()
@@ -23,6 +27,7 @@ public class ObjectExaminer : MonoBehaviour
         {
             OnExamineTakeObject();
             OnExitExamine();
+            OnZoomExamineObject();
         }
     }
 
@@ -51,8 +56,10 @@ public class ObjectExaminer : MonoBehaviour
         // add item to inventory
         if(Mouse.current.rightButton.wasPressedThisFrame)
         {
-            _player.AddItem(_storableItem);
+            //_player.AddItem(_storableItem);
             _examineCanvas.SetActive(false);
+            OnPickUpExamineItem?.Invoke(_storableItem);
+
         }
     }
 
@@ -69,6 +76,13 @@ public class ObjectExaminer : MonoBehaviour
 
     public void OnZoomExamineObject()
     {
-
+        if (Keyboard.current.wKey.wasPressedThisFrame)
+        {
+            _camera.fieldOfView = 50;
+        }else if (Keyboard.current.sKey.wasPressedThisFrame)
+        {
+            _camera.fieldOfView = 60;
+            
+        }
     }
 }
