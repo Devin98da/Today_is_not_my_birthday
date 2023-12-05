@@ -8,4 +8,9 @@ public class Bat : StorableItem
     {
         base.Interact();
     }
+
+    public override void Use()
+    {
+        Debug.Log("Use item " + interactableName);
+    }
 }

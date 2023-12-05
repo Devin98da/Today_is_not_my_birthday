@@ -39,12 +39,12 @@ public class ObjectExaminer : MonoBehaviour
             if (obj.id == item.id)
             {
                 obj.gameObject.SetActive(true);
-                Debug.Log("Object now examine" + item.interactableName);
+                //Debug.Log("Object now examine" + item.interactableName);
             }
             else
             {
                 obj.gameObject.SetActive(false);
-                Debug.Log("There are no items in interactable list");
+                //Debug.Log("There are no items in interactable list");
 
             }
         }

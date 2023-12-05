@@ -29,8 +29,6 @@ public class Player : Character
     Vector2 _horizontalInput;
 
 
-
-
     private void Update()
     {
         Movement();

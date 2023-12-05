@@ -6,19 +6,20 @@ using UnityEngine.UI;
 public class InventoryItemSlot : MonoBehaviour
 {
     public Image icon;
-    private StorableItem _storableItem;
+    [SerializeField] private Color _selectedColor, _nonSelectedColor;
 
-    public void AddItem(StorableItem newItem)
+    private void Awake()
     {
-        _storableItem = newItem;
-        icon.sprite = _storableItem.icon;
-        icon.enabled = true;
+        DeselectItem();
     }
 
-    public void ClearSlot()
+    public void Selectitem()
     {
-        _storableItem = null;
-        icon.sprite = null;
-        icon.enabled = false;
+        icon.color = _selectedColor;
+    }
+
+    public void DeselectItem()
+    {
+        icon.color = _nonSelectedColor;
     }
 }
