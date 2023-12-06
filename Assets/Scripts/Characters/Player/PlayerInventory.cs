@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.Progress;
@@ -223,96 +224,55 @@ public class PlayerInventory : MonoBehaviour
     // CHANGE SELECTED SLOT BY USIGN WASD KEYS
     public void ChangeSelectedSlotUsingWASDKeys()
     {
+        // TODO => Check an inventory item is available tha slot before select using WASD keys
         if (Keyboard.current.upArrowKey.wasPressedThisFrame)
         {
+            if (_selectedSlot >= 5)
+            {
+                inventoryItemSlots[_selectedSlot].DeselectItem();
+
+                _selectedSlot -= _itemSlotChange;
+                inventoryItemSlots[_selectedSlot].Selectitem();
+            }
             // documents, items, notes work
             // selected slot + row slot cound -> items
             // slected slot + 1 -> notes & documents
-            _selectedSlot -= _itemSlotChange;
-            if(_selectedSlot < 0)
-            {
-                _selectedSlot = 0;
-            }
-            InventoryItemSlot slot = inventoryItemSlots[_selectedSlot];
-            ItemInSlot itemInSlot = slot.GetComponentInChildren<ItemInSlot>();
-            for (int i = 0; i < inventoryItemSlots.Length; i++)
-            {
-                if (_selectedSlot == i)
-                {
-                    inventoryItemSlots[i].Selectitem();
-                }
-                else
-                {
-                    inventoryItemSlots[i].DeselectItem();
-                }
-            }
+
 
         }
         else if (Keyboard.current.downArrowKey.wasPressedThisFrame)
         {
-            _selectedSlot += _itemSlotChange;
-            if (_selectedSlot > _itemSlotCount -1)
+            if (_selectedSlot <= 14)
             {
-                _selectedSlot = _itemSlotCount;
-            }
-            InventoryItemSlot slot = inventoryItemSlots[_selectedSlot];
-            ItemInSlot itemInSlot = slot.GetComponentInChildren<ItemInSlot>();
-            for (int i = 0; i < inventoryItemSlots.Length; i++)
-            {
-                if (_selectedSlot == i)
-                {
-                    inventoryItemSlots[i].Selectitem();
-                }
-                else
-                {
-                    inventoryItemSlots[i].DeselectItem();
-                }
+                inventoryItemSlots[_selectedSlot].DeselectItem();
+                _selectedSlot += _itemSlotChange;
+                inventoryItemSlots[_selectedSlot].Selectitem();
             }
         }
         else if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
         {
+            inventoryItemSlots[_selectedSlot].DeselectItem();
             // documents, items, notes work
             // selected slot + row slot cound -> items
             // slected slot + 1 -> notes & documents
-            _selectedSlot += _ndSlotChange;
-            if (_selectedSlot > _itemSlotCount - 1)
-            {
-                _selectedSlot = 0;
-            }
-            InventoryItemSlot slot = inventoryItemSlots[_selectedSlot];
-            ItemInSlot itemInSlot = slot.GetComponentInChildren<ItemInSlot>();
-            for (int i = 0; i < inventoryItemSlots.Length; i++)
-            {
-                if (_selectedSlot == i)
-                {
-                    inventoryItemSlots[i].Selectitem();
-                }
-                else
-                {
-                    inventoryItemSlots[i].DeselectItem();
-                }
-            }
-        }
-        else if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
-        {
             _selectedSlot -= _ndSlotChange;
             if (_selectedSlot < 0)
             {
-                _selectedSlot = _itemSlotCount;
+                _selectedSlot = 0;
             }
-            InventoryItemSlot slot = inventoryItemSlots[_selectedSlot];
-            ItemInSlot itemInSlot = slot.GetComponentInChildren<ItemInSlot>();
-            for (int i = 0; i < inventoryItemSlots.Length; i++)
+            inventoryItemSlots[_selectedSlot].Selectitem();
+        }
+        else if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
+        {
+            inventoryItemSlots[_selectedSlot].DeselectItem();
+
+            _selectedSlot += _ndSlotChange;
+            if (_selectedSlot > _itemSlotCount - 1)
             {
-                if (_selectedSlot == i)
-                {
-                    inventoryItemSlots[i].Selectitem();
-                }
-                else
-                {
-                    inventoryItemSlots[i].DeselectItem();
-                }
+                _selectedSlot = _itemSlotCount - 1;
             }
+            inventoryItemSlots[_selectedSlot].Selectitem();
+
         }
     }
 

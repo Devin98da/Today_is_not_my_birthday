@@ -8,6 +8,7 @@ public class ObjectExaminer : MonoBehaviour
 {
     [SerializeField] private List<StorableItem> interactablesList = new List<StorableItem>();
     [SerializeField] private GameObject _examineCanvas;
+    [SerializeField] private GameObject[] _examineUis;
     [SerializeField] private Player _player;
     [SerializeField] private Camera _camera;
 
@@ -34,6 +35,7 @@ public class ObjectExaminer : MonoBehaviour
     public void ExamineObject(StorableItem item)
     {
         _storableItem = item;
+        // not walatath me wage loop karala adala note/doc eka pennanna one
         foreach (var obj in interactablesList)
         {
             if (obj.id == item.id)
@@ -47,6 +49,13 @@ public class ObjectExaminer : MonoBehaviour
                 //Debug.Log("There are no items in interactable list");
 
             }
+        }
+        foreach (var _examineUi in _examineUis)
+        {
+            //if(item.type == ItemType.ITEM)
+            //{
+                
+            //}
         }
         _examineCanvas.SetActive(true);
     }
