@@ -4,6 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum PlayerAction
+{
+        WALK, RUN, IDEL
+}
+
 public class Player : Character
 {
     [Header("Movement")]
@@ -17,7 +22,12 @@ public class Player : Character
     [SerializeField] private float _intearctionDistance = 5f;
     [SerializeField] private LayerMask _inteactionLayer;
 
+    [Header("Player action")]
+    [SerializeField] private PlayerAction _playerAction;
 
+    [Header("Player animator")]
+    [SerializeField] private Animator _playerAnimator;
+    private static int _walkHash;
 
     private Ray ray;
     private RaycastHit _hitinfo;
@@ -28,6 +38,11 @@ public class Player : Character
     Vector3 _verticalVelocity;
     Vector2 _horizontalInput;
 
+
+    private void Start()
+    {
+        //_walkHash = _playerAnimator.StringToHash("IsWalking");
+    }
 
     private void Update()
     {
@@ -51,8 +66,21 @@ public class Player : Character
             _verticalVelocity = Vector3.zero;
             _horizontalVelocity = (transform.right * _horizontalInput.x + transform.forward * _horizontalInput.y) * _speed; // Calculate the movement direction based on the local right vector and input
             _characterController.Move(_horizontalVelocity * Time.deltaTime);
+            if (_horizontalInput.x != 0 || _horizontalInput.y != 0)
+            {
+                // trigger player 
+                _playerAction = PlayerAction.WALK;
+                _playerAnimator.SetBool("IsWalking", true);
+            }
+            else if(_horizontalInput.x == 0 && _horizontalInput.y == 0)
+            {
+                _playerAction = PlayerAction.IDEL;
+                _playerAnimator.SetBool("IsWalking", false);
 
+            }
         }
+
+
         _verticalVelocity.y += _gravity * Time.deltaTime;
         _characterController.Move(_verticalVelocity * Time.deltaTime);
     }
