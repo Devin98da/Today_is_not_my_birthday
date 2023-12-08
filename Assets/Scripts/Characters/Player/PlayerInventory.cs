@@ -21,6 +21,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private InventoryItemSlot[] inventoryDocumentsSlots;
     [SerializeField] private InventoryItemSlot[] inventoryNotesSlots;
     [SerializeField] private GameObject[] inventoryUIs;
+    [SerializeField] private int _currentShowingUI = 0;
     [SerializeField] private GameObject _itemInInventoryPrefab;
     [SerializeField] private int _selectedSlot;
     [SerializeField] private int _itemSlotChange, _ndSlotChange;
@@ -44,7 +45,13 @@ public class PlayerInventory : MonoBehaviour
         if (Keyboard.current.iKey.wasPressedThisFrame)
         {
             // open inventory
-            DeselectItem();
+            _currentShowingUI = 0;
+            _selectedSlot = 0;
+            //DeselectItem();
+            ChangeSelectedSlot(_selectedSlot);
+            ShowInventoryUI(_currentShowingUI);
+            //inventoryUIs[_currentShowingUI].SetActive(true);
+
             inventoryUI.SetActive(!inventoryUI.activeSelf);
         }
     }
@@ -201,6 +208,7 @@ public class PlayerInventory : MonoBehaviour
             if(i == uiNum)
             {
                 inventoryUIs[i].SetActive(true);
+                _currentShowingUI = uiNum;
             }
             else
             {
@@ -212,12 +220,31 @@ public class PlayerInventory : MonoBehaviour
     // CHANGE SELECTED SLOT WHEN CLICK ON IT, USE ON CLICK FUNCTION OF INVENTORY SLOT
     public void ChangeSelectedSlot(int slot)
     {
-        if (_selectedSlot >= 0)
+        switch (_currentShowingUI)
         {
-            inventoryItemSlots[_selectedSlot].DeselectItem();
+            case 0:
+                SelectSlotFromInvenorty(slot,inventoryItemSlots);
+                break;
+            case 1:
+                SelectSlotFromInvenorty(slot, inventoryDocumentsSlots);
+                break;
+            case 2:
+                SelectSlotFromInvenorty(slot, inventoryNotesSlots);
+                break;
+            default:
+                break;
         }
 
-        inventoryItemSlots[slot].Selectitem();
+    }
+
+    private void SelectSlotFromInvenorty(int slot, InventoryItemSlot[] inventorySlots)
+    {
+        if (_selectedSlot >= 0)
+        {
+            inventorySlots[_selectedSlot].DeselectItem();
+        }
+
+        inventorySlots[slot].Selectitem();
         _selectedSlot = slot;
     }
 

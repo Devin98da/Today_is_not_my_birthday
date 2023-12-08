@@ -38,6 +38,8 @@ public class ObjectExaminer : MonoBehaviour
 
     public void ExamineItemObjects(StorableItem item)
     {
+        _examineDocsUI.SetActive(false);
+        _documentInfoPanel.SetActive(false);
         _storableItem = item;
         // not walatath me wage loop karala adala note/doc eka pennanna one
         foreach (var obj in examineItemList)
@@ -75,9 +77,9 @@ public class ObjectExaminer : MonoBehaviour
         // hide examine uI
         if(Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            _examineItemUi?.SetActive(false);
-            _examineDocsUI.SetActive(false);
-            _documentInfoPanel.SetActive(false);
+            //_examineItemUi?.SetActive(false);
+            //_examineDocsUI.SetActive(false);
+            //_documentInfoPanel.SetActive(false);
 
             _examineCanvas.SetActive(false);
 
@@ -101,6 +103,9 @@ public class ObjectExaminer : MonoBehaviour
     //======================================================DOCS==================================
     public void ExamineDocsObjects(StorableItem item)
     {
+        _examineItemUi?.SetActive(false);
+
+
         _storableItem = item;
         // not walatath me wage loop karala adala note/doc eka pennanna one
         foreach (var obj in examineDocsList)
