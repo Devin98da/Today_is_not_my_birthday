@@ -13,7 +13,7 @@ public class InventoryItemSlot : MonoBehaviour
         DeselectItem();
     }
 
-    public void Selectitem()
+    public void SelectItem()
     {
         icon.color = _selectedColor;
     }

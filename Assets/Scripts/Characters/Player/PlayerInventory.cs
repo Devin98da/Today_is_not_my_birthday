@@ -17,16 +17,26 @@ public class PlayerInventory : MonoBehaviour
     [Header("Inventory UI")]
     [SerializeField] private GameObject inventoryUI;
     //[SerializeField] private List<StorableItem> inventoryItemsSlots;
-    [SerializeField] private InventoryItemSlot[] inventoryItemSlots;
-    [SerializeField] private InventoryItemSlot[] inventoryDocumentsSlots;
-    [SerializeField] private InventoryItemSlot[] inventoryNotesSlots;
+    [SerializeField] private InventoryItemSlot[] inventoryItemSlots, inventoryDocumentsSlots, inventoryNotesSlots;
     [SerializeField] private GameObject[] inventoryUIs;
     [SerializeField] private int _currentShowingUI = 0;
     [SerializeField] private GameObject _itemInInventoryPrefab;
-    [SerializeField] private int _selectedSlot;
+    [SerializeField] private int _selectedItemSlot, _selectedDocSlot,_selectedNoteSlot;
     [SerializeField] private int _itemSlotChange, _ndSlotChange;
     [SerializeField] private int _itemSlotCount, _noteSlotsCount, _documentSlotsCount;
 
+    // Dictionary to map _currentShowingUI values to inventory slot arrays
+    [SerializeField] private Dictionary<int, InventoryItemSlot[]> inventorySlotsDictionary;
+
+    private void Start()
+    {
+        inventorySlotsDictionary = new Dictionary<int, InventoryItemSlot[]>
+        {
+            { 0, inventoryItemSlots },
+            { 1, inventoryDocumentsSlots },
+            { 2, inventoryNotesSlots }
+        };
+    }
     private void Awake()
     {
         ObjectExaminer.OnPickUpExamineItem += AddItem;
@@ -46,9 +56,9 @@ public class PlayerInventory : MonoBehaviour
         {
             // open inventory
             _currentShowingUI = 0;
-            _selectedSlot = 0;
+            //_selectedSlot = 0;
             //DeselectItem();
-            ChangeSelectedSlot(_selectedSlot);
+            //ChangeSelectedSlot(_selectedItemSlot);
             ShowInventoryUI(_currentShowingUI);
             //inventoryUIs[_currentShowingUI].SetActive(true);
 
@@ -218,35 +228,132 @@ public class PlayerInventory : MonoBehaviour
     }
 
     // CHANGE SELECTED SLOT WHEN CLICK ON IT, USE ON CLICK FUNCTION OF INVENTORY SLOT
+    //public void ChangeSelectedSlot(int slot)
+    //{
+    //    switch (_currentShowingUI)
+    //    {
+    //        case 0:
+    //            SelectSlotFromInvenorty(slot, inventoryItemSlots);
+    //            break;
+    //        case 1:
+    //            SelectSlotFromInvenorty(slot, inventoryDocumentsSlots);
+    //            break;
+    //        case 2:
+    //            SelectSlotFromInvenorty(slot, inventoryNotesSlots);
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //    Debug.Log(slot);
+
+    //}
+
+    //private void SelectSlotFromInvenorty(int slot, InventoryItemSlot[] inventorySlots)
+    //{
+    //    if (_selectedItemSlot >= 0 || _selectedDocSlot >=0 || _selectedNoteSlot >=0)
+    //    {
+    //        switch (_currentShowingUI)
+    //        {
+    //            case 0:
+    //                inventorySlots[_selectedItemSlot].DeselectItem();
+    //                break;
+    //            case 1:
+    //                inventorySlots[_selectedDocSlot].DeselectItem();
+    //                break;
+    //            case 2:
+    //                inventorySlots[_selectedNoteSlot].DeselectItem();
+    //                break;
+    //            default:
+    //                break;
+    //        }
+
+    //    }
+
+    //    switch (_currentShowingUI)
+    //    {
+    //        case 0:
+    //            _selectedItemSlot = slot;
+    //            inventorySlots[_selectedItemSlot].Selectitem();
+
+    //            break;
+    //        case 1:
+    //            _selectedDocSlot = slot;
+    //            inventorySlots[_selectedDocSlot].Selectitem();
+
+
+    //            break;
+    //        case 2:
+    //            _selectedNoteSlot = slot;
+    //            inventorySlots[_selectedNoteSlot].Selectitem();
+
+
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //    Debug.Log(slot);
+    //}
+
+
     public void ChangeSelectedSlot(int slot)
     {
+        if (_currentShowingUI >= 0 && _currentShowingUI < inventorySlotsDictionary.Count)
+        {
+            SelectSlotFromInventory(slot, inventorySlotsDictionary[_currentShowingUI]);
+        }
+    }
+
+    private void SelectSlotFromInventory(int slot, InventoryItemSlot[] inventorySlots)
+    {
+        DeselectCurrentItemSlot(inventorySlots);
+
         switch (_currentShowingUI)
         {
             case 0:
-                SelectSlotFromInvenorty(slot,inventoryItemSlots);
+                _selectedItemSlot = slot;
                 break;
             case 1:
-                SelectSlotFromInvenorty(slot, inventoryDocumentsSlots);
+                _selectedDocSlot = slot;
                 break;
             case 2:
-                SelectSlotFromInvenorty(slot, inventoryNotesSlots);
+                _selectedNoteSlot = slot;
                 break;
             default:
                 break;
         }
 
+        inventorySlots[slot].SelectItem();
+        Debug.Log(slot);
     }
 
-    private void SelectSlotFromInvenorty(int slot, InventoryItemSlot[] inventorySlots)
+    private void DeselectCurrentItemSlot(InventoryItemSlot[] inventorySlots)
     {
-        if (_selectedSlot >= 0)
+        int selectedSlot = GetSelectedSlot();
+        if (selectedSlot >= 0)
         {
-            inventorySlots[_selectedSlot].DeselectItem();
+            inventorySlots[selectedSlot].DeselectItem();
         }
-
-        inventorySlots[slot].Selectitem();
-        _selectedSlot = slot;
     }
+
+    private int GetSelectedSlot()
+    {
+        switch (_currentShowingUI)
+        {
+            case 0:
+                return _selectedItemSlot;
+            case 1:
+                return _selectedDocSlot;
+            case 2:
+                return _selectedNoteSlot;
+            default:
+                return -1;
+        }
+    }
+
+
+
+
+
 
     // CHANGE SELECTED SLOT BY USIGN WASD KEYS
     public void ChangeSelectedSlotUsingWASDKeys()
@@ -254,12 +361,12 @@ public class PlayerInventory : MonoBehaviour
         // TODO => Check an inventory item is available tha slot before select using WASD keys
         if (Keyboard.current.upArrowKey.wasPressedThisFrame)
         {
-            if (_selectedSlot >= 5)
+            if (_selectedItemSlot >= 5)
             {
-                inventoryItemSlots[_selectedSlot].DeselectItem();
+                inventoryItemSlots[_selectedItemSlot].DeselectItem();
 
-                _selectedSlot -= _itemSlotChange;
-                inventoryItemSlots[_selectedSlot].Selectitem();
+                _selectedItemSlot -= _itemSlotChange;
+                inventoryItemSlots[_selectedItemSlot].SelectItem();
             }
             // documents, items, notes work
             // selected slot + row slot cound -> items
@@ -269,36 +376,36 @@ public class PlayerInventory : MonoBehaviour
         }
         else if (Keyboard.current.downArrowKey.wasPressedThisFrame)
         {
-            if (_selectedSlot <= 14)
+            if (_selectedItemSlot <= 14)
             {
-                inventoryItemSlots[_selectedSlot].DeselectItem();
-                _selectedSlot += _itemSlotChange;
-                inventoryItemSlots[_selectedSlot].Selectitem();
+                inventoryItemSlots[_selectedItemSlot].DeselectItem();
+                _selectedItemSlot += _itemSlotChange;
+                inventoryItemSlots[_selectedItemSlot].SelectItem();
             }
         }
         else if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
         {
-            inventoryItemSlots[_selectedSlot].DeselectItem();
+            inventoryItemSlots[_selectedItemSlot].DeselectItem();
             // documents, items, notes work
             // selected slot + row slot cound -> items
             // slected slot + 1 -> notes & documents
-            _selectedSlot -= _ndSlotChange;
-            if (_selectedSlot < 0)
+            _selectedItemSlot -= _ndSlotChange;
+            if (_selectedItemSlot < 0)
             {
-                _selectedSlot = 0;
+                _selectedItemSlot = 0;
             }
-            inventoryItemSlots[_selectedSlot].Selectitem();
+            inventoryItemSlots[_selectedItemSlot].SelectItem();
         }
         else if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
         {
-            inventoryItemSlots[_selectedSlot].DeselectItem();
+            inventoryItemSlots[_selectedItemSlot].DeselectItem();
 
-            _selectedSlot += _ndSlotChange;
-            if (_selectedSlot > _itemSlotCount - 1)
+            _selectedItemSlot += _ndSlotChange;
+            if (_selectedItemSlot > _itemSlotCount - 1)
             {
-                _selectedSlot = _itemSlotCount - 1;
+                _selectedItemSlot = _itemSlotCount - 1;
             }
-            inventoryItemSlots[_selectedSlot].Selectitem();
+            inventoryItemSlots[_selectedItemSlot].SelectItem();
 
         }
     }
@@ -306,7 +413,7 @@ public class PlayerInventory : MonoBehaviour
     // DESELECT INVENTORY ITEM
     public void DeselectItem()
     {
-        inventoryItemSlots[_selectedSlot].DeselectItem();
+        //inventoryItemSlots[_selectedSlot].DeselectItem();
     }
 
     // USE SELECTED ITEM
@@ -315,10 +422,11 @@ public class PlayerInventory : MonoBehaviour
         //TO DO -> check inventory is open
         if(Keyboard.current.uKey.wasPressedThisFrame)
         {
-            InventoryItemSlot slot = inventoryItemSlots[_selectedSlot];
-            ItemInSlot itemInSlot = slot.GetComponentInChildren<ItemInSlot>();
-            itemInSlot?.storableItem.Use();
-            slot.DeselectItem();
+            // check item in slot is an item
+            //InventoryItemSlot slot = inventoryItemSlots[_selectedSlot];
+            //ItemInSlot itemInSlot = slot.GetComponentInChildren<ItemInSlot>();
+            //itemInSlot?.storableItem.Use();
+            //slot.DeselectItem();
         }
     }
 
@@ -326,10 +434,10 @@ public class PlayerInventory : MonoBehaviour
     {
         if (Keyboard.current.kKey.wasPressedThisFrame)
         {
-            InventoryItemSlot slot = inventoryItemSlots[_selectedSlot];
-            ItemInSlot itemInSlot = slot.GetComponentInChildren<ItemInSlot>();
-            itemInSlot?.storableItem.Examine();
-            slot.DeselectItem();
+            //InventoryItemSlot slot = inventoryItemSlots[_selectedSlot];
+            //ItemInSlot itemInSlot = slot.GetComponentInChildren<ItemInSlot>();
+            //itemInSlot?.storableItem.Examine();
+            //slot.DeselectItem();
         }
     }
 
