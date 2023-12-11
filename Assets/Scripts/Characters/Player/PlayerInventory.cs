@@ -27,6 +27,8 @@ public class PlayerInventory : MonoBehaviour
 
     // Dictionary to map _currentShowingUI values to inventory slot arrays
     [SerializeField] private Dictionary<int, InventoryItemSlot[]> inventorySlotsDictionary;
+    int _numRows = 4;
+    int _numColumns = 5;
 
     private void Start()
     {
@@ -47,7 +49,8 @@ public class PlayerInventory : MonoBehaviour
         OpenCloseInventory();
         UseSelectedInventoryItem();
         ExamineSelectedInventoryItem();
-        ChangeSelectedSlotUsingWASDKeys();
+        //ChangeSelectedItemSlotUsingWASDKeys();
+        ChangeSelectedDocSlotsUsingWASDKeys();
     }
 
     private void OpenCloseInventory()
@@ -228,73 +231,6 @@ public class PlayerInventory : MonoBehaviour
     }
 
     // CHANGE SELECTED SLOT WHEN CLICK ON IT, USE ON CLICK FUNCTION OF INVENTORY SLOT
-    //public void ChangeSelectedSlot(int slot)
-    //{
-    //    switch (_currentShowingUI)
-    //    {
-    //        case 0:
-    //            SelectSlotFromInvenorty(slot, inventoryItemSlots);
-    //            break;
-    //        case 1:
-    //            SelectSlotFromInvenorty(slot, inventoryDocumentsSlots);
-    //            break;
-    //        case 2:
-    //            SelectSlotFromInvenorty(slot, inventoryNotesSlots);
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //    Debug.Log(slot);
-
-    //}
-
-    //private void SelectSlotFromInvenorty(int slot, InventoryItemSlot[] inventorySlots)
-    //{
-    //    if (_selectedItemSlot >= 0 || _selectedDocSlot >=0 || _selectedNoteSlot >=0)
-    //    {
-    //        switch (_currentShowingUI)
-    //        {
-    //            case 0:
-    //                inventorySlots[_selectedItemSlot].DeselectItem();
-    //                break;
-    //            case 1:
-    //                inventorySlots[_selectedDocSlot].DeselectItem();
-    //                break;
-    //            case 2:
-    //                inventorySlots[_selectedNoteSlot].DeselectItem();
-    //                break;
-    //            default:
-    //                break;
-    //        }
-
-    //    }
-
-    //    switch (_currentShowingUI)
-    //    {
-    //        case 0:
-    //            _selectedItemSlot = slot;
-    //            inventorySlots[_selectedItemSlot].Selectitem();
-
-    //            break;
-    //        case 1:
-    //            _selectedDocSlot = slot;
-    //            inventorySlots[_selectedDocSlot].Selectitem();
-
-
-    //            break;
-    //        case 2:
-    //            _selectedNoteSlot = slot;
-    //            inventorySlots[_selectedNoteSlot].Selectitem();
-
-
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //    Debug.Log(slot);
-    //}
-
-
     public void ChangeSelectedSlot(int slot)
     {
         if (_currentShowingUI >= 0 && _currentShowingUI < inventorySlotsDictionary.Count)
@@ -323,7 +259,6 @@ public class PlayerInventory : MonoBehaviour
         }
 
         inventorySlots[slot].SelectItem();
-        Debug.Log(slot);
     }
 
     private void DeselectCurrentItemSlot(InventoryItemSlot[] inventorySlots)
@@ -356,57 +291,121 @@ public class PlayerInventory : MonoBehaviour
 
 
     // CHANGE SELECTED SLOT BY USIGN WASD KEYS
-    public void ChangeSelectedSlotUsingWASDKeys()
+    //public void ChangeSelectedSlotUsingWASDKeys()
+    //{
+    //    // TODO => Check an inventory item is available tha slot before select using WASD keys
+    //    if (Keyboard.current.upArrowKey.wasPressedThisFrame)
+    //    {
+    //        if (_selectedItemSlot >= 5)
+    //        {
+    //            inventoryItemSlots[_selectedItemSlot].DeselectItem();
+
+    //            _selectedItemSlot -= _itemSlotChange;
+    //            inventoryItemSlots[_selectedItemSlot].SelectItem();
+    //        }
+    //        // documents, items, notes work
+    //        // selected slot + row slot cound -> items
+    //        // slected slot + 1 -> notes & documents
+
+
+    //    }
+    //    else if (Keyboard.current.downArrowKey.wasPressedThisFrame)
+    //    {
+    //        if (_selectedItemSlot <= 14)
+    //        {
+    //            inventoryItemSlots[_selectedItemSlot].DeselectItem();
+    //            _selectedItemSlot += _itemSlotChange;
+    //            inventoryItemSlots[_selectedItemSlot].SelectItem();
+    //        }
+    //    }
+    //    else if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
+    //    {
+    //        inventoryItemSlots[_selectedItemSlot].DeselectItem();
+    //        // documents, items, notes work
+    //        // selected slot + row slot cound -> items
+    //        // slected slot + 1 -> notes & documents
+    //        _selectedItemSlot -= _ndSlotChange;
+    //        if (_selectedItemSlot < 0)
+    //        {
+    //            _selectedItemSlot = 0;
+    //        }
+    //        inventoryItemSlots[_selectedItemSlot].SelectItem();
+    //    }
+    //    else if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
+    //    {
+    //        inventoryItemSlots[_selectedItemSlot].DeselectItem();
+
+    //        _selectedItemSlot += _ndSlotChange;
+    //        if (_selectedItemSlot > _itemSlotCount - 1)
+    //        {
+    //            _selectedItemSlot = _itemSlotCount - 1;
+    //        }
+    //        inventoryItemSlots[_selectedItemSlot].SelectItem();
+
+    //    }
+    //}
+
+    public void ChangeSelectedItemSlotUsingWASDKeys()
     {
-        // TODO => Check an inventory item is available tha slot before select using WASD keys
+        int newRow = _selectedItemSlot / _numColumns;
+        Debug.Log("New row " + newRow);
+
+        int newColumn = _selectedItemSlot % _numColumns;
+        Debug.Log("New column " + newColumn);
+
+
         if (Keyboard.current.upArrowKey.wasPressedThisFrame)
         {
-            if (_selectedItemSlot >= 5)
-            {
-                inventoryItemSlots[_selectedItemSlot].DeselectItem();
+            newRow = Mathf.Max(0, newRow - 1);
+        }
+        else if (Keyboard.current.downArrowKey.wasPressedThisFrame)
+        {
+            newRow = Mathf.Min(_numRows - 1, newRow + 1);
+        }
+        else if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
+        {
+            newColumn = Mathf.Max(0, newColumn - 1);
+        }
+        else if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
+        {
+            newColumn = Mathf.Min(_numColumns - 1, newColumn + 1);
+        }
 
-                _selectedItemSlot -= _itemSlotChange;
-                inventoryItemSlots[_selectedItemSlot].SelectItem();
-            }
-            // documents, items, notes work
-            // selected slot + row slot cound -> items
-            // slected slot + 1 -> notes & documents
+        int newSlot = newRow * _numColumns + newColumn;
+        Debug.Log("New slot " + newSlot);
 
+        if (_selectedItemSlot != newSlot)
+        {
+            inventoryItemSlots[_selectedItemSlot].DeselectItem();
+            _selectedItemSlot = newSlot;
+            inventoryItemSlots[_selectedItemSlot].SelectItem();
+        }
+    }
+
+    public void ChangeSelectedDocSlotsUsingWASDKeys()
+    {
+        int numRows = 12;
+
+        int newRow = _selectedDocSlot;
+
+        if (Keyboard.current.upArrowKey.wasPressedThisFrame)
+        {
+            newRow = (newRow - 1)  > -1 ? newRow - 1 : numRows - 1;
 
         }
         else if (Keyboard.current.downArrowKey.wasPressedThisFrame)
         {
-            if (_selectedItemSlot <= 14)
-            {
-                inventoryItemSlots[_selectedItemSlot].DeselectItem();
-                _selectedItemSlot += _itemSlotChange;
-                inventoryItemSlots[_selectedItemSlot].SelectItem();
-            }
-        }
-        else if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
-        {
-            inventoryItemSlots[_selectedItemSlot].DeselectItem();
-            // documents, items, notes work
-            // selected slot + row slot cound -> items
-            // slected slot + 1 -> notes & documents
-            _selectedItemSlot -= _ndSlotChange;
-            if (_selectedItemSlot < 0)
-            {
-                _selectedItemSlot = 0;
-            }
-            inventoryItemSlots[_selectedItemSlot].SelectItem();
-        }
-        else if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
-        {
-            inventoryItemSlots[_selectedItemSlot].DeselectItem();
+            newRow = (newRow + 1) ! < numRows ? newRow + 1 : 0;
 
-            _selectedItemSlot += _ndSlotChange;
-            if (_selectedItemSlot > _itemSlotCount - 1)
-            {
-                _selectedItemSlot = _itemSlotCount - 1;
-            }
-            inventoryItemSlots[_selectedItemSlot].SelectItem();
+        }
 
+        int newSlot = newRow;
+
+        if (_selectedDocSlot != newSlot)
+        {
+            inventoryDocumentsSlots[_selectedDocSlot].DeselectItem();
+            _selectedDocSlot = newSlot;
+            inventoryDocumentsSlots[_selectedDocSlot].SelectItem();
         }
     }
 
