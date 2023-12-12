@@ -285,66 +285,6 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-
-
-
-
-
-    // CHANGE SELECTED SLOT BY USIGN WASD KEYS
-    //public void ChangeSelectedSlotUsingWASDKeys()
-    //{
-    //    // TODO => Check an inventory item is available tha slot before select using WASD keys
-    //    if (Keyboard.current.upArrowKey.wasPressedThisFrame)
-    //    {
-    //        if (_selectedItemSlot >= 5)
-    //        {
-    //            inventoryItemSlots[_selectedItemSlot].DeselectItem();
-
-    //            _selectedItemSlot -= _itemSlotChange;
-    //            inventoryItemSlots[_selectedItemSlot].SelectItem();
-    //        }
-    //        // documents, items, notes work
-    //        // selected slot + row slot cound -> items
-    //        // slected slot + 1 -> notes & documents
-
-
-    //    }
-    //    else if (Keyboard.current.downArrowKey.wasPressedThisFrame)
-    //    {
-    //        if (_selectedItemSlot <= 14)
-    //        {
-    //            inventoryItemSlots[_selectedItemSlot].DeselectItem();
-    //            _selectedItemSlot += _itemSlotChange;
-    //            inventoryItemSlots[_selectedItemSlot].SelectItem();
-    //        }
-    //    }
-    //    else if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
-    //    {
-    //        inventoryItemSlots[_selectedItemSlot].DeselectItem();
-    //        // documents, items, notes work
-    //        // selected slot + row slot cound -> items
-    //        // slected slot + 1 -> notes & documents
-    //        _selectedItemSlot -= _ndSlotChange;
-    //        if (_selectedItemSlot < 0)
-    //        {
-    //            _selectedItemSlot = 0;
-    //        }
-    //        inventoryItemSlots[_selectedItemSlot].SelectItem();
-    //    }
-    //    else if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
-    //    {
-    //        inventoryItemSlots[_selectedItemSlot].DeselectItem();
-
-    //        _selectedItemSlot += _ndSlotChange;
-    //        if (_selectedItemSlot > _itemSlotCount - 1)
-    //        {
-    //            _selectedItemSlot = _itemSlotCount - 1;
-    //        }
-    //        inventoryItemSlots[_selectedItemSlot].SelectItem();
-
-    //    }
-    //}
-
     public void ChangeSelectedItemSlotUsingWASDKeys()
     {
         int newRow = _selectedItemSlot / _numColumns;
