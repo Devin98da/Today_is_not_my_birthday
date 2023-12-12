@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.Progress;
+using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private int _selectedItemSlot, _selectedDocSlot,_selectedNoteSlot;
     [SerializeField] private int _itemSlotChange, _ndSlotChange;
     [SerializeField] private int _itemSlotCount, _noteSlotsCount, _documentSlotsCount;
+    [SerializeField] private TextMeshProUGUI _itemNameText, _itemDescriptionText, _docNameText;
+    [SerializeField] private StorableItem _storableItem;
 
     // Dictionary to map _currentShowingUI values to inventory slot arrays
     [SerializeField] private Dictionary<int, InventoryItemSlot[]> inventorySlotsDictionary;
@@ -259,6 +262,14 @@ public class PlayerInventory : MonoBehaviour
         }
 
         inventorySlots[slot].SelectItem();
+        InventoryItemSlot inventoryItemSlot = inventorySlots[slot];
+        Debug.Log(inventoryItemSlot);
+        ItemInSlot itemInSlot = inventoryItemSlot.gameObject.GetComponentInChildren<ItemInSlot>();
+        Debug.Log(itemInSlot);
+
+        _storableItem = itemInSlot?.storableItem;
+        SetItemData(_storableItem);
+
     }
 
     private void DeselectCurrentItemSlot(InventoryItemSlot[] inventorySlots)
@@ -285,6 +296,35 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    // SET SELECTED ITEM  
+    private void SetStorableItemInSelectedSlot(int slot)
+    {
+    }
+
+    // SET ITEM DATA 
+    private void SetItemData(StorableItem item)
+    {
+        switch (_currentShowingUI)
+        {
+            case 0:
+                _itemNameText.text = item.interactableName;
+                _itemDescriptionText.text = item.description;
+                break;
+            case 1:
+                _docNameText.text = item.interactableName;
+                break;
+            case 2:
+                _itemNameText.text = item.interactableName;
+                _itemDescriptionText.text = item.description;
+                break;
+            default:
+                break;
+        }
+
+    }
+
+
+    // CHANGE SLOTS USING WASD KEYS OF ITEM INVENTORY
     public void ChangeSelectedItemSlotUsingWASDKeys()
     {
         int newRow = _selectedItemSlot / _numColumns;
@@ -322,6 +362,7 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    // CHANGE SLOTS USING WASD KEYS OF DCOCUMENT INVENTORY
     public void ChangeSelectedDocSlotsUsingWASDKeys()
     {
         int numRows = 12;

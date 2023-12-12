@@ -10,6 +10,7 @@ public enum ItemType
 
 public class StorableItem : Interactable, IInteractable
 {
+    public string description;
     public bool isStackble;
     public Sprite icon;
     public int maxStackSize;
