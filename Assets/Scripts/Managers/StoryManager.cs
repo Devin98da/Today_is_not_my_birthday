@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StoryManager : MonoBehaviour
@@ -14,31 +15,70 @@ public class StoryManager : MonoBehaviour
         //DisplayCurrentStoryNode();
     }
 
+    // SET CURRENT STORY NODE
+    public void SetCurrentStoryNodeIndex(int index)
+    {
+        currentNodeIndex = index;
+    }
+
+    // GET CURRENT STORY NODE INDEX
+    public int GetCurrentStoryNodeIndex()
+    {
+        return currentNodeIndex;
+    }
+    // GET CURRENT STORY NODE TEXT
     public string GetCurrentNodeText()
     {
         return storyNodes[currentNodeIndex].storyNodeText;
     }
 
+    // GET CURRENT STORY NODE
     public StoryNode GetCurrentStoryNode()
     {
         return storyNodes[currentNodeIndex];
     }
 
+    // GET CURRENT STORY NODE CHOICES
     public List<Choice> GetCurrentNodeChoices()
     {
         return storyNodes[currentNodeIndex].choices;
     }
 
-    void DisplayCurrentStoryNode()
+    // DISPLAY CURRNET STORY NODE
+    public void DisplayCurrentStoryNode()
     {
         if(currentNodeIndex < storyNodes.Count)
         {
             StoryNode storyNode = storyNodes[currentNodeIndex];
+            switch (storyNode.storyNodeType)
+            {
+                case StoryNodeType.DEFAULT:
+                    break;
+                case StoryNodeType.CUTSCENE:
+                    // play cutscene
+                    // set current story node to next one 
+                    
+                    // CutsceneManager.PlayCutscene(storyNode.cutscneClip);
+                    // currentStoryNodeIndex++;
+
+                    // if after cutscene there are player choices then called next StoryNodeHere
+                    
+                    break;
+                case StoryNodeType.PLAYER_CHOICE:
+                    // pause game 
+                    // display player choices
+                    // after make choice set current story node to next one 
+                    break;
+                default:
+                    break;
+            }
             //Debug.Log(storyNode.storyNodeText);
             for(int i = 0;i<storyNode.choices.Count;i++)
             {
                 //Debug.Log(i + 1 + storyNode.choices[i].choiceText);
             }
+            Debug.Log("Enf of the story");
+
         }
         else
         {

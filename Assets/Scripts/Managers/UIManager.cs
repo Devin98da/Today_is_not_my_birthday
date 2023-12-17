@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
         //UpdateStoryUI();
     }
 
+
+
     public void ShowStoryNode()
     {
         _storyPanel.SetActive(true);
