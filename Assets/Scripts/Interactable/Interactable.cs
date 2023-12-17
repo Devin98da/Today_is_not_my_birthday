@@ -22,5 +22,11 @@ public class Interactable : MonoBehaviour
 
     public string interactableName;
     public bool canExamine;
+    protected UIManager uiManager;
+
+    private void Start()
+    {
+        uiManager = GameObject.FindObjectOfType<UIManager>();
+    }
 
 }

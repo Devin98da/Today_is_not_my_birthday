@@ -113,7 +113,10 @@ public class Player : Character
                     //    Debug.Log("Do what is in interact method");
                     //}
                     interactable.Interact();
-                    _hitinfo.collider.gameObject.SetActive(false);
+                    if(_hitinfo.collider.GetComponent<StorableItem>() is StorableItem)
+                    {
+                        _hitinfo.collider.gameObject.SetActive(false);
+                    }
                 }
 
             }
