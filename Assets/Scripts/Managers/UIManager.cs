@@ -6,7 +6,12 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager Instance;
+    public static UIManager Instance {
+        get
+        {
+            return _instance;
+        }
+    }
     private static UIManager _instance;
 
     [SerializeField] private StoryManager _storyManager;

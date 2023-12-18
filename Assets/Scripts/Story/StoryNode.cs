@@ -12,7 +12,8 @@ public enum StoryNodeType
     CUTSCENE,
     PLAYER_CHOICE,
     CUTSCENE_CHOICE,
-    DEFAULT
+    DEFAULT,
+    DIALOGUE    
 }
 
 [System.Serializable]
