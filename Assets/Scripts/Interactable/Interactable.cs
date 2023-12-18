@@ -5,6 +5,8 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     public string id;
+    public bool hasStoryIndex;
+    public int storyNodeIndex;
 
     [ContextMenu("Generate guid for id")]
     private void GenerateGuid()

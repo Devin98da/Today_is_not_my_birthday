@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance;
+    private static UIManager _instance;
+
     [SerializeField] private StoryManager _storyManager;
     [SerializeField] private TextMeshProUGUI _currentStoryNodeText;
     [SerializeField] private Button[] _choicesButtons;
@@ -16,7 +19,17 @@ public class UIManager : MonoBehaviour
         //UpdateStoryUI();
     }
 
-
+    private void Awake()
+    {
+        if(_instance == null)
+        {
+            _instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     public void ShowStoryNode()
     {
@@ -32,8 +45,8 @@ public class UIManager : MonoBehaviour
         {
             //if (i < _storyManager.GetCurrentNodeChoices().Count)
             //{
-            Debug.Log(_storyManager.GetCurrentNodeChoices()[1].choiceText);
-            Debug.Log(_choicesButtons[i].GetComponentInChildren<TextMeshProUGUI>().text);
+            //Debug.Log(_storyManager.GetCurrentNodeChoices()[1].choiceText);
+            //Debug.Log(_choicesButtons[i].GetComponentInChildren<TextMeshProUGUI>().text);
                 _choicesButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = _storyManager.GetCurrentNodeChoices()[i].choiceText;
                 _choicesButtons[i].gameObject.SetActive(true);
                 int choiceIndex = i;

@@ -11,6 +11,7 @@ public enum StoryNodeType
 {
     CUTSCENE,
     PLAYER_CHOICE,
+    CUTSCENE_CHOICE,
     DEFAULT
 }
 
@@ -22,7 +23,8 @@ public class StoryNode
     public List<Choice> choices;
     public StoryNodeType storyNodeType;
     //public bool isCutsceneNode;
-    //public VideoClip cutsceneClip;
+    public VideoClip cutsceneClip;
+    public int nextStoryNodeIndex;
 }
 
 

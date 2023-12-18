@@ -6,7 +6,9 @@ using UnityEngine;
 public class StoryManager : MonoBehaviour
 {
     public List<StoryNode> storyNodes;
-    [SerializeField]private int currentNodeIndex = 0;
+    [SerializeField] private int currentNodeIndex = 0;
+    [SerializeField] private CutsceneManager _cutsceneManager;
+    [SerializeField] private UIManager _uIManager;
 
     private int currentNodeId;
 
@@ -57,7 +59,8 @@ public class StoryManager : MonoBehaviour
                 case StoryNodeType.CUTSCENE:
                     // play cutscene
                     // set current story node to next one 
-                    
+                    _cutsceneManager.PlayCutscene(storyNode.cutsceneClip);
+                    SetCurrentStoryNodeIndex(storyNode.nextStoryNodeIndex);
                     // CutsceneManager.PlayCutscene(storyNode.cutscneClip);
                     // currentStoryNodeIndex++;
 
@@ -68,6 +71,10 @@ public class StoryManager : MonoBehaviour
                     // pause game 
                     // display player choices
                     // after make choice set current story node to next one 
+                    _uIManager.ShowStoryNode();
+                    break;
+                case StoryNodeType.CUTSCENE_CHOICE:
+                    _uIManager.ShowStoryNode();
                     break;
                 default:
                     break;
