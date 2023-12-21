@@ -56,6 +56,9 @@ public class StoryManager : MonoBehaviour
             {
                 case StoryNodeType.DEFAULT:
                     break;
+                case StoryNodeType.DIALOGUE:
+                    AudioManager.Instance.PlayDialogue(storyNode.dialogueClip);
+                    break;
                 case StoryNodeType.CUTSCENE:
                     // play cutscene
                     // set current story node to next one 

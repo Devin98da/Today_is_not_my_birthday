@@ -25,6 +25,7 @@ public class StoryNode
     public StoryNodeType storyNodeType;
     //public bool isCutsceneNode;
     public VideoClip cutsceneClip;
+    public AudioClip dialogueClip;
     public int nextStoryNodeIndex;
 }
 
