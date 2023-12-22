@@ -6889,54 +6889,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storyNodes:
   - storyNodeId: 0
-    storyNodeText: Open door or not
+    storyNodeText: A1
+    nextStoryNodeIndex: 1
+    storyNodeType: 0
+    choices: []
+    cutsceneClip: {fileID: 32900000, guid: 9487da5d8b46e3b45a75f891a2fe95c1, type: 3}
+    dialogueClip: {fileID: 0}
+  - storyNodeId: 0
+    storyNodeText: B@
+    nextStoryNodeIndex: 0
+    storyNodeType: 2
     choices:
     - choiceId: 0
-      choiceText: Findkey to open door
-      nextStoryNode: 1
-    - choiceId: 1
-      choiceText: Find thing to break door
-      nextStoryNode: 1
-    storyNodeType: 0
-    cutsceneClip: {fileID: 32900000, guid: 9487da5d8b46e3b45a75f891a2fe95c1, type: 3}
-    dialogueClip: {fileID: 8300000, guid: da9d0ff2dca5006419df2399a6941a15, type: 3}
-    nextStoryNodeIndex: 1
-  - storyNodeId: 1
-    storyNodeText: sdfdsf
-    choices:
+      choiceText: No
+      nextStoryNode: 2
     - choiceId: 0
       choiceText: Yes
       nextStoryNode: 2
-    - choiceId: 1
-      choiceText: No
-      nextStoryNode: 2
-    storyNodeType: 4
     cutsceneClip: {fileID: 0}
     dialogueClip: {fileID: 0}
-    nextStoryNodeIndex: 2
   - storyNodeId: 2
-    storyNodeText: Play dialogues
-    choices:
-    - choiceId: 0
-      choiceText: Wait until he open door
-      nextStoryNode: 3
-    - choiceId: 0
-      choiceText: Break the door
-      nextStoryNode: 3
-    - choiceId: 0
-      choiceText: Horen dorata sawan denna
-      nextStoryNode: 3
-    storyNodeType: 1
-    cutsceneClip: {fileID: 0}
-    dialogueClip: {fileID: 0}
+    storyNodeText: 
     nextStoryNodeIndex: 3
-  - storyNodeId: 3
-    storyNodeText: 'sdfas fadfda '
+    storyNodeType: 0
     choices: []
+    cutsceneClip: {fileID: 32900000, guid: 9487da5d8b46e3b45a75f891a2fe95c1, type: 3}
+    dialogueClip: {fileID: 0}
+  - storyNodeId: 3
+    storyNodeText: 
+    nextStoryNodeIndex: 0
     storyNodeType: 3
+    choices: []
     cutsceneClip: {fileID: 0}
     dialogueClip: {fileID: 0}
-    nextStoryNodeIndex: 3
+  - storyNodeId: 0
+    storyNodeText: 
+    nextStoryNodeIndex: 0
+    storyNodeType: 0
+    choices: []
+    cutsceneClip: {fileID: 0}
+    dialogueClip: {fileID: 0}
   currentNodeIndex: 0
   _cutsceneManager: {fileID: 501694390}
   _uIManager: {fileID: 1984647742}
@@ -10597,6 +10589,7 @@ Transform:
   - {fileID: 829085456}
   - {fileID: 501694391}
   - {fileID: 1482145360}
+  - {fileID: 1397528806}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1238682126 stripped
@@ -11726,6 +11719,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388882356}
   m_CullTransparentMesh: 1
+--- !u!1 &1397528805
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1397528806}
+  - component: {fileID: 1397528807}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1397528806
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397528805}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1229575810}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1397528807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397528805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c45fe111ef4abb43aebbeda453ec2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 1720708054}
+  _mouseLook: {fileID: 1720708052}
+  currentState: 0
 --- !u!1 &1409419060 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fba9c112b393cb3458966060fd80a110,
@@ -17600,7 +17640,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 151fbb89-a43c-469e-a19c-f4b37d2ba919
   hasStoryIndex: 1
-  storyNodeIndex: 2
+  storyNodeIndex: 1
   interactableName: Door
   canExamine: 0
   storyManager: {fileID: 829085457}

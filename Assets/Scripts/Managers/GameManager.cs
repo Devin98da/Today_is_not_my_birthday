@@ -8,9 +8,12 @@ public class GameManager : MonoBehaviour
     // Singleton instance to ensure there's only one GameManager
     public static GameManager Instance { get; private set; }
 
+
+    [SerializeField] private Player _player;
+    [SerializeField] private MouseLook _mouseLook;
     // Enum to represent different game states
     //private enum GameState { Menu, Playing, Paused, GameOver }
-    private GameState currentState; // Current state of the game
+    [SerializeField] private GameState currentState; // Current state of the game
 
     // Other variables for player progression, score, etc.
     // Add variables for player progress, score, levels, etc.
@@ -48,9 +51,11 @@ public class GameManager : MonoBehaviour
                     break;
 
                 case GameState.Playing:
-                    HandlePlayingInput();
-                    UpdateGameplay();
-                    CheckGameOverConditions();
+                    //HandlePlayingInput();
+                    _player.HandlePlayingInput();
+                    _mouseLook.HandleMouseLook();
+                    //UpdateGameplay();
+                    //CheckGameOverConditions();
                     break;
 
                 case GameState.Paused:

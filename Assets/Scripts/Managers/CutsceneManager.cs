@@ -37,7 +37,7 @@ public class CutsceneManager : MonoBehaviour
                 _storyManager.DisplayCurrentStoryNode();
                 break;
             case StoryNodeType.DIALOGUE:
-                _storyManager.DisplayCurrentStoryNode();
+                //_storyManager.DisplayCurrentStoryNode();
                 break;
             default:
                 break;

@@ -16,7 +16,7 @@ public class MouseLook : MonoBehaviour
         //Cursor.lockState = CursorLockMode.Locked;   
     }
 
-    private void Update()
+    public void HandleMouseLook()
     {
         //transform.Rotate(Vector3.up, _mouseX * Time.deltaTime); // Mouse inputs handle frame rate, therefor no need to apply it here. 
         transform.Rotate(Vector3.up, _mouseX);

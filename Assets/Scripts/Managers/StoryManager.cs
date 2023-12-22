@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
+using UnityEditor.Build;
+using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class StoryManager : MonoBehaviour
 {
     public List<StoryNode> storyNodes;
-    [SerializeField] private int currentNodeIndex = 0;
-    [SerializeField] private CutsceneManager _cutsceneManager;
-    [SerializeField] private UIManager _uIManager;
+    [SerializeField] public int currentNodeIndex = 0;
+    [SerializeField] public CutsceneManager _cutsceneManager;
+     [SerializeField] public UIManager _uIManager;
 
     private int currentNodeId;
 
@@ -124,3 +128,4 @@ public class StoryManager : MonoBehaviour
     }
 
 }
+

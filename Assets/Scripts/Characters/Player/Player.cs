@@ -44,11 +44,20 @@ public class Player : Character
         //_walkHash = _playerAnimator.StringToHash("IsWalking");
     }
 
-    private void Update()
+    //private void Update()
+    //{
+    //    Movement();
+    //    InteractWithObjects();
+    //}
+
+    #region HandlePlayingInput
+    public void HandlePlayingInput()
     {
         Movement();
         InteractWithObjects();
     }
+    #endregion
+
     #region Recieve Input
     public void RecieveInput(Vector2 horizontalInput)
     {

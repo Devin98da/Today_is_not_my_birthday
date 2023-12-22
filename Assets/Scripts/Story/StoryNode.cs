@@ -1,9 +1,6 @@
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 using System.Collections.Generic;
 using static UnityEngine.GraphicsBuffer;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -21,13 +18,16 @@ public class StoryNode
 {
     public int storyNodeId;
     public string storyNodeText;
-    public List<Choice> choices;
+    public int nextStoryNodeIndex;
     public StoryNodeType storyNodeType;
+    public List<Choice> choices;
     //public bool isCutsceneNode;
+
     public VideoClip cutsceneClip;
     public AudioClip dialogueClip;
-    public int nextStoryNodeIndex;
 }
+
+
 
 
 
