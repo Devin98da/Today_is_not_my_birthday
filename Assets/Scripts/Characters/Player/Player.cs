@@ -122,6 +122,7 @@ public class Player : Character
                     //    Debug.Log("Do what is in interact method");
                     //}
                     interactable.Interact();
+                    GameManager.Instance.ChangeGameState(GameState.MENU);
                     if(_hitinfo.collider.GetComponent<StorableItem>() is StorableItem)
                     {
                         _hitinfo.collider.gameObject.SetActive(false);

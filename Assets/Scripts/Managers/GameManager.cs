@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public enum GameState { Menu, Playing, Paused, GameOver };
+public enum GameState { MENU, PLAYING, PAUSED, GAMEOVER, LOADING, WIN, STORY, SETTINGS, LEVEL_TRANSITION };
 public class GameManager : MonoBehaviour
 {
     // Singleton instance to ensure there's only one GameManager
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Player _player;
     [SerializeField] private MouseLook _mouseLook;
+    [SerializeField] private StoryManager _storyManager;
     // Enum to represent different game states
     //private enum GameState { Menu, Playing, Paused, GameOver }
     [SerializeField] private GameState currentState; // Current state of the game
@@ -37,7 +39,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // Initialize game state and other variables
-        currentState = GameState.Menu;
+        currentState = GameState.MENU;
     }
 
     // Update is called once per frame
@@ -46,24 +48,35 @@ public class GameManager : MonoBehaviour
         // Check for input, update game state, handle events, etc.
         switch (currentState)
         {
-                 case GameState.Menu:
+                case GameState.MENU:
                     HandleMenuInput();
                     break;
 
-                case GameState.Playing:
-                    //HandlePlayingInput();
-                    _player.HandlePlayingInput();
-                    _mouseLook.HandleMouseLook();
-                    //UpdateGameplay();
-                    //CheckGameOverConditions();
-                    break;
+                case GameState.PLAYING:
+                    HandlePlayingInput();
 
-                case GameState.Paused:
+                    UpdateGameplay();
+                //CheckGameOverConditions();
+                break;
+
+                case GameState.PAUSED:
                     HandlePauseInput();
                     break;
 
-                case GameState.GameOver:
+                case GameState.GAMEOVER:
                     HandleGameOverInput();
+                    break;
+                case GameState.WIN:
+                    break;
+                case GameState.SETTINGS:
+                    break;
+                case GameState.STORY:
+                    _storyManager.DisplayCurrentStoryNode();
+
+                    break;
+                case GameState.LOADING: 
+                    break;
+                case GameState.LEVEL_TRANSITION: 
                     break;
             
         }
@@ -106,10 +119,13 @@ public class GameManager : MonoBehaviour
     private void HandlePlayingInput()
     {
         // Check for playing-related input
-        if (Input.GetButtonDown("Pause")) // Example: Check if the "Pause" button is pressed
+        if (Keyboard.current.escapeKey.wasPressedThisFrame) // Example: Check if the "Pause" button is pressed
         {
             // Pause the game
-            ChangeGameState(GameState.Paused);
+            ChangeGameState(GameState.PAUSED);
+            UIManager.Instance.ShowHidePausePanel(true);
+
+            Time.timeScale = 0;
         }
 
         // Add more playing-related input checks and actions as needed
@@ -117,6 +133,8 @@ public class GameManager : MonoBehaviour
 
     private void UpdateGameplay()
     {
+        _player.HandlePlayingInput();
+        _mouseLook.HandleMouseLook();
         // Update game elements, handle game events, etc.
         // Example: Move the player, update AI, handle collisions, etc.
 
@@ -127,10 +145,13 @@ public class GameManager : MonoBehaviour
     private void HandlePauseInput()
     {
         // Check for pause-related input
-        if (Input.GetButtonDown("Pause")) // Example: Check if the "Pause" button is pressed
+        if (Keyboard.current.escapeKey.wasPressedThisFrame) // Example: Check if the "Pause" button is pressed
         {
             // Resume the game
-            ChangeGameState(GameState.Playing);
+            Time.timeScale = 1;
+            UIManager.Instance.ShowHidePausePanel(false);
+
+            ChangeGameState(GameState.PLAYING);
         }
     }
 
@@ -173,7 +194,7 @@ private void QuitGame()
         // If game over conditions are met, transition to the game over state
         if (IsGameOver())
         {
-            ChangeGameState(GameState.GameOver);
+            ChangeGameState(GameState.GAMEOVER);
         }
     }
 

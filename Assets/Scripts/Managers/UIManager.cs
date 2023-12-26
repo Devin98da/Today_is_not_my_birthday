@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _currentStoryNodeText;
     [SerializeField] private Button[] _choicesButtons;
     [SerializeField] private GameObject _storyPanel;
+    [SerializeField] private GameObject _pausePanel;
 
     private void Start()
     {
@@ -36,6 +37,13 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // -------------------------------------------- SHOW/ HIDE PAUSE PANEL ---------------------------------------------------------
+    public void ShowHidePausePanel(bool pause)
+    {
+        _pausePanel.SetActive(pause);
+    }
+
+    // -------------------------------------------- SHOW STORY NODE ---------------------------------------------------------
     public void ShowStoryNode()
     {
         _storyPanel.SetActive(true);

@@ -34,12 +34,15 @@ public class CutsceneManager : MonoBehaviour
         switch(storyNode.storyNodeType)
         {
             case StoryNodeType.CUTSCENE_CHOICE:
-                _storyManager.DisplayCurrentStoryNode();
+                //_storyManager.DisplayCurrentStoryNode();
+                GameManager.Instance.ChangeGameState(GameState.STORY);
+
                 break;
             case StoryNodeType.DIALOGUE:
                 //_storyManager.DisplayCurrentStoryNode();
                 break;
             default:
+                GameManager.Instance.ChangeGameState(GameState.PLAYING);
                 break;
         }
 

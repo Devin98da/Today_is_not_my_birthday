@@ -30,7 +30,8 @@ public class StoryNodeTrigger : MonoBehaviour
         {
             if (_storyManager.GetCurrentStoryNodeIndex() == storyNodeIndex)
             {
-                _storyManager.DisplayCurrentStoryNode();
+                //_storyManager.DisplayCurrentStoryNode();
+                GameManager.Instance.ChangeGameState(GameState.STORY);
                 this.gameObject.SetActive(false);
             }
         }

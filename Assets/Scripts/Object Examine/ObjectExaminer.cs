@@ -68,6 +68,7 @@ public class ObjectExaminer : MonoBehaviour
             //_player.AddItem(_storableItem);
             _examineCanvas.SetActive(false);
             OnPickUpExamineItem?.Invoke(_storableItem);
+            GameManager.Instance.ChangeGameState(GameState.PLAYING);
 
         }
     }
@@ -84,6 +85,8 @@ public class ObjectExaminer : MonoBehaviour
             _examineCanvas.SetActive(false);
 
             _storableItem.gameObject.SetActive(true);
+            GameManager.Instance.ChangeGameState(GameState.PLAYING);
+
         }
 
     }
